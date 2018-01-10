@@ -12,19 +12,23 @@ Instructions for getting started.
 
 ### Prerequisites
 
-What are the prerequisites
+If you wish to just play the game, there are no prerequisites.
+
+The code is written in [Python 2.7](https://www.python.org/download/releases/2.7/).
 
 ### Running the tests
 
-Are there tests?
+Currently, PyPacman has no tests.
 
 ## Running the program
 
-How to run the game
+To run the program, simply execute the PyPacman.exe.
 
 ## Built with
 
-What is the program built with
+* [Python 2.7](https://www.python.org/download/releases/2.7/)
+* [Joystix font](http://www.classicgaming.cc/classics/pac-man/fonts)
+
 
 ## Authors
 
