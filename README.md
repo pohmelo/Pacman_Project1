@@ -32,7 +32,7 @@ To run the program, simply execute the PyPacman.exe.
 
 ## Authors
 
-* **Petteri Salonurmi** - *Meme meister* - [Kiree](https://github.com/Kiree)
+* **Petteri Salonurmi** - *Connecting the dots* - [Kiree](https://github.com/Kiree)
 
 ## License
 
@@ -40,6 +40,8 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+
+* [The UniOulu AI course and its teachers](https://noppa.oulu.fi/noppa/kurssi/521495a/) - For the teaching!
+* [The Berkeley AI course](http://ai.berkeley.edu/home.html) - For the original material!
+* [The University of Oulu](http://www.oulu.fi/university/) - For providing the course!
+* [Blanko](http://www.blanko.fi/) - For being awesome!
