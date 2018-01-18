@@ -144,7 +144,7 @@ def genericSearch(problem, fringe, heuristic=None):
             
             If the next item in the fringe was a node we had already visited, we'll jump over it.
             """
-    return []  # This only ever happens if the fringe didn't exist
+    return []  # This only ever happens if the fringe didn't exist or goal was not found.
 
 
 def depthFirstSearch(problem):
