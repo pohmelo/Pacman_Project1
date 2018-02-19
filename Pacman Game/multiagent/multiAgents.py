@@ -27,7 +27,7 @@ class ReflexAgent(Agent):
       it in any way you see fit, so long as you don't touch our method
       headers.
     """
-
+    #Joku muutos vain, testaan osaanko laittaa tän remote repoon.
 
     def getAction(self, gameState):
         """
