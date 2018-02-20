@@ -73,7 +73,68 @@ class ReflexAgent(Agent):
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
 
         "*** YOUR CODE HERE ***"
-        return successorGameState.getScore()
+        score = 0 # Max score = 100, min score = 0
+
+        if successorGameState.isLose(): #If action leads to losing the game.
+            return 0
+        elif successorGameState.isWin(): #If action leads to winning the game.
+            return 100
+        else:
+            try: # Clumsy way to check how many ghosts are there. Assumingly four ghosts is the maximum.
+                ghostPosition = currentGameState.getGhostPosition(1) # Gets ghost position.
+                ghostDistance = util.manhattanDistance(ghostPosition, newPos) # Distance between ghost's position and Pacman's new position.
+                if ghostDistance > 2:
+                    score += 30 # If distance between ghost and Pacman is greater than 2, we add 30 points to score.
+            except IndexError: # Error handling.
+                pass
+
+            try: # Same thing repeated here..
+                ghostPosition = currentGameState.getGhostPosition(2)
+                ghostDistance = util.manhattanDistance(ghostPosition, newPos)
+                if ghostDistance > 2:
+                    score += 30
+            except IndexError:
+                pass
+
+            try: # ..and here..
+                ghostPosition = currentGameState.getGhostPosition(3)
+                ghostDistance = util.manhattanDistance(ghostPosition, newPos)
+                if ghostDistance > 2:
+                    score += 30
+            except IndexError:
+                pass
+
+            try: # ..and here.
+                ghostPosition = currentGameState.getGhostPosition(4)
+                ghostDistance = util.manhattanDistance(ghostPosition, newPos)
+                if ghostDistance > 2:
+                    score += 30
+            except IndexError:
+                pass
+
+            currentPos = currentGameState.getPacmanPosition() # Pacman's current position.
+            foodDots = currentGameState.getFood() # Food positions.
+            minFoodDistance = 1000 # Default minimum food distance.
+            for i in foodDots.asList(): # Goes through food positions with help of asList().
+                foodDistance = manhattanDistance(i, currentPos) # Distance between food's position and Pacman's _current_ position.
+                if foodDistance < minFoodDistance: # If food distance is less than minimum food distance..
+                    minFoodDistance = foodDistance # ..minimun food distance is updated.
+
+            minFoodDistance2 = 1000 # Default minimum food distance.
+            for j in foodDots.asList(): # Goes through food positions with help of asList().
+                foodDistance = manhattanDistance(j, newPos) # Distance between food's position and Pacman's _new_ position.
+                if foodDistance < minFoodDistance2: # If food distance is less than minimum food distance..
+                    minFoodDistance2 = foodDistance # ..minimun food distance is updated.
+
+            if minFoodDistance2 < minFoodDistance: # Compares if Pacman's new position is closer to food than current position.
+                score += 20 # ..And if so, points are added to score.
+            elif minFoodDistance2 == minFoodDistance: # Checks if the new and current positions are just as close to food.
+                score += random.randint(1,11) # .. And if so, some points are added to score. Random numbers seem to prevent situations where Pacman gets stuck because of same food distances.
+
+            if action == Directions.STOP: # If Pacman doesn't move it will get minus points.
+                score -= 10
+
+            return score # Score is returned.
 
 def scoreEvaluationFunction(currentGameState):
     """
