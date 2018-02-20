@@ -151,12 +151,38 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
     def getAction(self, gameState):
         """
           Returns the expectimax action using self.depth and self.evaluationFunction
-
           All ghosts should be modeled as choosing uniformly at random from their
           legal moves.
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        # Initial depth = 1
+        # Pacman agent index = 0
+        return self.expectimax(gameState, 1, 0)
+
+    def expectimax(self, gameState, currentDepth, agentIndex):
+        # Check if we're winning or losing
+        if currentDepth > self.depth or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
+
+        # Take a note of the legal actions for the current agent. Stopping isn't legal.
+        legalActions = [action for action in gameState.getLegalActions(agentIndex) if action != 'Stop']
+
+        # Current & Next values
+        nextIndex = agentIndex + 1  # For the Agent
+        nextDepth = currentDepth  # For the depth
+        if nextIndex >= gameState.getNumAgents():  # Next would be ghost
+            nextIndex = 0  # Back to Pacman
+            nextDepth += 1  # Add 1 to depth
+
+        # Recursively generate the list of expected actions
+        actionList = [self.expectimax(gameState.generateSuccessor(agentIndex, action), nextDepth, nextIndex) for action in legalActions]
+
+        if agentIndex == 0 and currentDepth == 1:  # Pacman's first move
+            bestIndices = [index for index in range(len(actionList)) if actionList[index] == max(actionList)]
+            return legalActions[random.choice(bestIndices)]  # Pick a random action
+        elif agentIndex == 0:  # The Max node
+            return max(actionList)  # Return the max expectation
+        else:  # The chance node
+            return sum(actionList)/len(actionList)  # return the average expectation of all legal actions
 
 def betterEvaluationFunction(currentGameState):
     """
