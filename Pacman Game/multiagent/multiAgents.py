@@ -118,13 +118,13 @@ class ReflexAgent(Agent):
             for i in foodDots.asList(): # Goes through food positions with help of asList().
                 foodDistance = manhattanDistance(i, currentPos) # Distance between food's position and Pacman's _current_ position.
                 if foodDistance < minFoodDistance: # If food distance is less than minimum food distance..
-                    minFoodDistance = foodDistance # ..minimun food distance is updated.
+                    minFoodDistance = foodDistance # ..minimum food distance is updated.
 
             minFoodDistance2 = 1000 # Default minimum food distance.
             for j in foodDots.asList(): # Goes through food positions with help of asList().
                 foodDistance = manhattanDistance(j, newPos) # Distance between food's position and Pacman's _new_ position.
                 if foodDistance < minFoodDistance2: # If food distance is less than minimum food distance..
-                    minFoodDistance2 = foodDistance # ..minimun food distance is updated.
+                    minFoodDistance2 = foodDistance # ..minimum food distance is updated.
 
             if minFoodDistance2 < minFoodDistance: # Compares if Pacman's new position is closer to food than current position.
                 score += 20 # ..And if so, points are added to score.
@@ -288,7 +288,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 v2 = max(v[1], actionAndScore) # Picking greatest score.
                 if v2 > v[1]: # If v2 is gerater value than v's score, v is replaced with action in process and v2 score.
                     v = (action, v2)
-                if v2 > beta: # v is replaced if new score is greater than the old one.
+                if v2 > beta: # v is returned if v2 has greater value than beta. Pruning is not done.
                     return v
                 alpha = max(alpha,v2) # v2 and alpha are compared and greater value will become alpha.
         return v
