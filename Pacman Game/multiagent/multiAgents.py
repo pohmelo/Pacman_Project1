@@ -208,7 +208,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
             return self.minValue(gameState, agentIndex, currentDepth) # minValue is for ghosts.
 
     def minValue(self, gameState, agentIndex, currentDepth):
-        v = ('',10000) # Initializing v, 10000 is infinite enough.
+        v = ('',10000) # Initializing v, 10000 is infinite enough. Includes action and score.
 
         for action in gameState.getLegalActions(agentIndex): # Goes through current agent's legal actions.
             if action != 'Stop': # If legal action is staying still, it is ignored.
@@ -221,7 +221,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         return v
 
     def maxValue(self, gameState, agentIndex, currentDepth):
-        v = ('',-10000) # Initializing v, -10000 is infinite enough.
+        v = ('',-10000) # Initializing v, -10000 is infinite enough. Includes action and score.
 
         for action in gameState.getLegalActions(agentIndex): # Goes through current agent's legal actions.
             if action != 'Stop': # If legal action is staying still, it is ignored.
