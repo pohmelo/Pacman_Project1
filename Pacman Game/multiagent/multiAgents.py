@@ -189,7 +189,49 @@ class MinimaxAgent(MultiAgentSearchAgent):
             Returns the total number of agents in the game
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        actionAndScore = self.value(gameState, 0, 0) # Pacman's turn, depth is 0 in the beginning.
+        return actionAndScore[0] # actionAndScore is tuple, first(0) place is for action and second(1) for score.
+
+    def value(self, gameState, agentIndex, currentDepth): # agentIndex for keeping track turns, current depth for keeping track of depth.
+        if agentIndex == gameState.getNumAgents(): # Checks if agentIndex is the same as maximum number of ghosts in current level.
+            agentIndex = 0 # ..If so, it's Pacman's turn.
+            currentDepth += 1 # Depth of the tree is incresed.
+
+        # Check if current depth is the same as we get from self.depth or if we're winning or losing.
+        if currentDepth == self.depth or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
+
+        elif agentIndex == 0: # 0 is Pacman.
+            return self.maxValue(gameState, agentIndex, currentDepth) # maxValue is for Pacman.
+
+        elif agentIndex != 0: # Indices other than 0 are ghosts.
+            return self.minValue(gameState, agentIndex, currentDepth) # minValue is for ghosts.
+
+    def minValue(self, gameState, agentIndex, currentDepth):
+        v = ('',10000) # Initializing v, 10000 is infinite enough.
+
+        for action in gameState.getLegalActions(agentIndex): # Goes through current agent's legal actions.
+            if action != 'Stop': # If legal action is staying still, it is ignored.
+                actionAndScore = self.value(gameState.generateSuccessor(agentIndex, action), agentIndex+1, currentDepth) # Recursively calling value function.
+                if isinstance(actionAndScore, tuple): # Check if actionAndScore is tuple.
+                    actionAndScore = actionAndScore[1] # And from now on actionAndScore is just score.
+                v2 = min(actionAndScore, v[1]) # Picking lowest score.
+                if v2 < v[1]: # v is replaced if new score is smaller than the old one.
+                    v = (action,v2)
+        return v
+
+    def maxValue(self, gameState, agentIndex, currentDepth):
+        v = ('',-10000) # Initializing v, -10000 is infinite enough.
+
+        for action in gameState.getLegalActions(agentIndex): # Goes through current agent's legal actions.
+            if action != 'Stop': # If legal action is staying still, it is ignored.
+                actionAndScore = self.value(gameState.generateSuccessor(agentIndex, action), agentIndex+1, currentDepth) # Recursively calling value function.
+                if isinstance(actionAndScore, tuple): # Check if actionAndScore is tuple.
+                    actionAndScore = actionAndScore[1] # Now actionAndScore is just score.
+                v2 = max(v[1], actionAndScore) # Picking greatest score.
+                if v2 > v[1]: # v is replaced if new score is greater than the old one.
+                    v = (action,v2)
+        return v
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
