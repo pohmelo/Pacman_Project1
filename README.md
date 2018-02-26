@@ -33,6 +33,7 @@ To run the program, simply execute the PyPacman.exe.
 ## Authors
 
 * **Petteri Salonurmi** - *Connecting the dots* - [Kiree](https://github.com/Kiree)
+* **Mikko Pulli** - [pohmelo](https://github.com/pohmelo)
 
 ## License
 
